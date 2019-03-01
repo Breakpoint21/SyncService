@@ -1,0 +1,86 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Account</h2>
+        @{
+            if (Model.Data.HiDriveAccount == null)
+            {
+                <p>No HiDrive Account configured!</p>
+                <a asp-page="./Account/Add">Add</a>
+            }
+            else
+            {
+                <ul>
+                    <li>@Model.Data.HiDriveAccount.AccountId</li>
+                    <li>@Model.Data.HiDriveAccount.UserName</li>
+                </ul>
+            }
+        }
+    </div>
+    <div class="col-md-9">
+        <h2>Folder</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Label
+                    </th>
+                    <th>
+                        Source
+                    </th>
+                    <th>
+                        Destination
+                    </th>
+                    <th>
+                        Schedule
+                    </th>
+                    <th>
+                        State
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Data.Folders)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Label)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SourcePath)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DestinationPath)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Schedule)
+                        </td>
+                        <td>
+                            @{
+                                if (item.IsRunning)
+                                {
+                                    <p>running</p>
+                                }
+                                else
+                                {
+                                    <p>paused</p>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <a asp-page="./Folder/CreateOrEdit" asp-page-handler="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./Folder/Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-page="./Folder/CreateOrEdit" asp-page-handler="Create" class="btn btn-primary" role="button">Create New</a>
+    </div>
+</div>

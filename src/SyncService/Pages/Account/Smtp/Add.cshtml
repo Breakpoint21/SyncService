@@ -1,0 +1,49 @@
+﻿@page
+@model SyncService.Pages.Account.Smtp.AddModel
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h2>Add</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Data.Label" class="control-label"></label>
+                <input asp-for="Data.Label" class="form-control" />
+                <span asp-validation-for="Data.Label" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Server" class="control-label"></label>
+                <input asp-for="Data.Server" class="form-control" />
+                <span asp-validation-for="Data.Server" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Port" class="control-label"></label>
+                <input asp-for="Data.Port" class="form-control" />
+                <span asp-validation-for="Data.Port" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Username" class="control-label"></label>
+                <input asp-for="Data.Username" class="form-control" />
+                <span asp-validation-for="Data.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.EmailTo" class="control-label"></label>
+                <input asp-for="Data.EmailTo" class="form-control" />
+                <span asp-validation-for="Data.EmailTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Password" class="control-label"></label>
+                <input asp-for="Data.Password" type="password" class="form-control" />
+                <span asp-validation-for="Data.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

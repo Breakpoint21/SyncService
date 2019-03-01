@@ -1,0 +1,65 @@
+﻿@page
+@model SyncService.Pages.Account.Smtp.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+@if (Model.TestMailSendSuccessfully.HasValue)
+{
+    <div class="row">
+        @if (Model.TestMailSendSuccessfully.Value)
+        {
+            <div class="alert alert-success" role="alert">Test E-Mail successfully send!</div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">Sending Test E-Mail failed!<br/>@Model.TestMailMessage</div>
+        }
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Data.Id" />
+            <div class="form-group">
+                <label asp-for="Data.Label" class="control-label"></label>
+                <input asp-for="Data.Label" class="form-control" />
+                <span asp-validation-for="Data.Label" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Server" class="control-label"></label>
+                <input asp-for="Data.Server" class="form-control" />
+                <span asp-validation-for="Data.Server" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Port" class="control-label"></label>
+                <input asp-for="Data.Port" class="form-control" />
+                <span asp-validation-for="Data.Port" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Username" class="control-label"></label>
+                <input asp-for="Data.Username" class="form-control" />
+                <span asp-validation-for="Data.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.EmailTo" class="control-label"></label>
+                <input asp-for="Data.EmailTo" class="form-control" />
+                <span asp-validation-for="Data.EmailTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Password" class="control-label"></label>
+                <input asp-for="Data.Password" type="password" class="form-control" />
+                <span asp-validation-for="Data.Password" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Test" asp-page-handler="Test" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+﻿@page
+@model SyncService.Pages.Account.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Accounts</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>HiDrive Account</h3>
+        @{
+            if (Model.Data.HiDriveAccount == null)
+            {
+                <p>No HiDrive Account configured!</p>
+                <a asp-page="./Add">Add</a>
+            }
+            else
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                AccountId
+                            </th>
+                            <th>
+                                Username
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.Data.HiDriveAccount.AccountId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.Data.HiDriveAccount.UserName)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a asp-page="./Revoke" class="btn btn-primary" role="button">Revoke HiDrive Account</a>
+            }
+        }
+    </div>
+    <div class="col-md-8">
+        <h3>SMTP Accounts</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Label
+                    </th>
+                    <th>
+                        Server
+                    </th>
+                    <th>
+                        Port
+                    </th>
+                    <th>
+                        Username
+                    </th>
+                    <th>
+                        EmailTo
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Data.SmtpAccounts)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Label)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Server)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Port)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmailTo)
+                        </td>
+                        <td>
+                            <a asp-page="./Smtp/Edit" asp-page-handler="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-page="./Smtp/Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-page="./Smtp/Add" class="btn btn-primary" role="button">Add SMTP Account</a>
+    </div>
+</div>

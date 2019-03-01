@@ -1,0 +1,146 @@
+﻿@page "{handler?}"
+@using SyncService.ObjectModel.Folder
+@model SyncService.Pages.Folder.CreateEditModel
+@{
+    ViewData["Title"] = Model.Data.Id == Guid.Empty ? "Create" : "Edit";
+}
+
+<h2>@(Model.Data.Id == Guid.Empty ? "Create" : "Edit")</h2>
+
+<h4>Folder</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Data.Id" />
+            <div class="form-group">
+                <label asp-for="Data.AccountId"></label>
+                <select asp-for="Data.AccountId" asp-items="Model.Data.Accounts" class="form-control"></select>
+                <span asp-validation-for="Data.AccountId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Label"></label>
+                <input asp-for="Data.Label" class="form-control" />
+                <span asp-validation-for="Data.Label" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.SourcePath"></label>
+                <input asp-for="Data.SourcePath" class="form-control" />
+                <span asp-validation-for="Data.SourcePath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.DestinationPath"></label>
+                <input asp-for="Data.DestinationPath" class="form-control" />
+                <span asp-validation-for="Data.DestinationPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.LogPath"></label>
+                <input asp-for="Data.LogPath" class="form-control" />
+                <span asp-validation-for="Data.LogPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.LogLevel"></label>
+                <select asp-for="Data.LogLevel" asp-items="Html.GetEnumSelectList<LogLevel>()" class="form-control" ></select>
+                <span asp-validation-for="Data.LogLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.Schedule"></label>
+                <input asp-for="Data.Schedule" class="form-control" />
+                <span asp-validation-for="Data.Schedule" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check form-check-inline">
+                <input asp-for="Data.SendEmail" id="Folder_NotificationConfiguration_SendEmail" class="form-check-input" />
+                <label asp-for="Data.SendEmail" class="form-check-label"></label>
+                <span asp-validation-for="Data.SendEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check form-check-inline">
+                <input asp-for="Data.SendEmailOnlyOnError" id="Folder_NotificationConfiguration_SendEmailOnlyOnError" class="form-check-input" disabled="disabled" />
+                <label asp-for="Data.SendEmailOnlyOnError" class="form-check-label"></label>
+                <span asp-validation-for="Data.SendEmailOnlyOnError" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data.SmptAccountId"></label>
+                <select asp-for="Data.SmptAccountId" asp-items="Model.Data.SmptAccounts" id="Folder_Smtp" class="form-control"></select>
+                <span asp-validation-for="Data.SmptAccountId" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="NewSmptDiv">
+                <div class="form-group">
+                    <label asp-for="Data.NewSmtpAccount.Label"></label>
+                    <input asp-for="Data.NewSmtpAccount.Label" class="form-control" />
+                    <span asp-validation-for="Data.NewSmtpAccount.Label" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Data.NewSmtpAccount.Server"></label>
+                    <input asp-for="Data.NewSmtpAccount.Server" class="form-control" />
+                    <span asp-validation-for="Data.NewSmtpAccount.Server" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Data.NewSmtpAccount.Port"></label>
+                    <input asp-for="Data.NewSmtpAccount.Port" class="form-control" />
+                    <span asp-validation-for="Data.NewSmtpAccount.Port" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Data.NewSmtpAccount.Username"></label>
+                    <input asp-for="Data.NewSmtpAccount.Username" class="form-control" />
+                    <span asp-validation-for="Data.NewSmtpAccount.Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Data.NewSmtpAccount.Password"></label>
+                    <input asp-for="Data.NewSmtpAccount.Password" type="password" class="form-control" />
+                    <span asp-validation-for="Data.NewSmtpAccount.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Data.NewSmtpAccount.EmailTo"></label>
+                    <input asp-for="Data.NewSmtpAccount.EmailTo" class="form-control" />
+                    <span asp-validation-for="Data.NewSmtpAccount.EmailTo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                
+                <a asp-page="../Index" role="button" class="btn btn-primary">Cancel</a>
+                @{
+                    if (Model.Data.Id != Guid.Empty)
+                    {
+                        <a asp-page="Delete" asp-route-id="@Model.Data.Id" role="button" class="btn btn-primary">Delete</a>       
+                        <input type="submit" value="Start" class="btn btn-primary" asp-page-handler="Start" />     
+                    }
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $("#Folder_NotificationConfiguration_SendEmail").change(function() {
+            var checked = $("#Folder_NotificationConfiguration_SendEmail").val();
+            if (checked) {
+                $("#Folder_NotificationConfiguration_SendEmailOnlyOnError").prop("disabled", false);
+            } else {
+                $("#Folder_NotificationConfiguration_SendEmailOnlyOnError").prop("disabled", true);
+            }
+        });
+
+        $("#Folder_Smtp").change(function() {
+            var value = $("#Folder_Smtp").val();
+            if (value === "00000000-0000-0000-0000-000000000000") {
+                $("#NewSmptDiv").show();
+            } else {
+                $("#NewSmptDiv").hide();
+            }
+        });
+
+        $( document ).ready(function() {
+            var value = $("#Folder_Smtp").val();
+            if (value === "00000000-0000-0000-0000-000000000000") {
+                $("#NewSmptDiv").show();
+            } else {
+                $("#NewSmptDiv").hide();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,25 @@
+﻿@page
+@model SyncService.Pages.Account.RevokeModel
+@{
+    ViewData["Title"] = "Revoke";
+}
+
+<h2>Revoke HiDrive Account</h2>
+
+<p>This will revoke the access of SyncService to your HiDriveAccount</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Data.HiDriveUsername" class="control-label"></label>
+                <input asp-for="Data.HiDriveUsername" readonly="readonly" class="form-control" />
+                <span asp-validation-for="Data.HiDriveUsername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Revoke" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

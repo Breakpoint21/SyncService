@@ -1,0 +1,29 @@
+﻿@page
+@model SyncService.Pages.Account.AddModel
+@{
+    ViewData["Title"] = "Add HiDrive Account";
+}
+
+<h2>Add HiDrive Account</h2>
+
+<p>To Add your HiDrive Account you will be redirected to the HiDrive site, where you will be asked to login and approve access to your HiDrive</p>
+<p>When you approved SyncService, a code is generated and shown. Please paste this code in the textbox below and click add.</p>
+
+<a target="_blank" rel="noopener noreferrer" href="@Model.Data.LoginUrl" class="btn btn-primary" role="button">Login and get code</a>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Data.Code" class="control-label"></label>
+                <input asp-for="Data.Code" class="form-control" />
+                <span asp-validation-for="Data.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
