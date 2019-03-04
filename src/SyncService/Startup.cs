@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
-using Kyrodan.HiDrive;
-using Kyrodan.HiDrive.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using SyncService.HiDriveClient;
+using SyncService.HiDriveClient.Authentication;
 using SyncService.Options;
 using SyncService.Services.Account;
 using SyncService.Services.Folder;
@@ -46,7 +46,7 @@ namespace SyncService
             services.AddSingleton<FolderConfigurationService>();
             services.AddSingleton<HiDriveSyncService>();
             services.AddSingleton<IHiDriveAuthenticator, HiDriveAuthenticator>(provider => new HiDriveAuthenticator(provider.GetRequiredService<IOptions<HiDriveApiOptions>>().Value.HiDriveClientId, provider.GetRequiredService<IOptions<HiDriveApiOptions>>().Value.HiDriveClientSecret));
-            services.AddSingleton<IHiDriveClient, HiDriveClient>();
+            services.AddSingleton<IHiDriveClient, HiDriveClient.HiDriveClient>();
             services.AddSingleton<IHostedService>(provider => provider.GetRequiredService<HiDriveSyncService>());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddFluentValidation(configuration =>

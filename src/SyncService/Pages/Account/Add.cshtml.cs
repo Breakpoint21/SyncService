@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
-using Kyrodan.HiDrive;
-using Kyrodan.HiDrive.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
+using SyncService.HiDriveClient.Authentication;
 using SyncService.ObjectModel.Account;
 using SyncService.Options;
 using SyncService.Services.Account;
@@ -60,7 +59,7 @@ namespace SyncService.Pages.Account
                 _hiDriveApiOptions.Value.HiDriveClientSecret);
             var oAuth2Token = await hiDriveAuthenticator.AuthenticateByAuthorizationCodeAsync(authorizationCode);
 
-            var hiDriveClient = new HiDriveClient(hiDriveAuthenticator);
+            var hiDriveClient = new HiDriveClient.HiDriveClient(hiDriveAuthenticator);
             var user = await hiDriveClient.User.Me.Get().ExecuteAsync();
 
             return new HiDriveAccount { AccountId = user.Account, UserName = user.Alias, RefreshToken = oAuth2Token.RefreshToken };

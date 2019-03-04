@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Kyrodan.HiDrive;
-using Kyrodan.HiDrive.Models;
-using Kyrodan.HiDrive.Requests;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using SyncService.HiDriveClient;
+using SyncService.HiDriveClient.Models;
+using SyncService.HiDriveClient.Requests;
 
 namespace SyncService.Services.Sync
 {

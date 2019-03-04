@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Kyrodan.HiDrive\Kyrodan.HiDrive.csproj" />
+    <ProjectReference Include="..\SyncService.HiDriveClient\SyncService.HiDriveClient.csproj" />
   </ItemGroup>
 
 </Project>
