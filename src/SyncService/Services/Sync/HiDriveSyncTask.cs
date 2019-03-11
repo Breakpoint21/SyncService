@@ -101,7 +101,7 @@ namespace SyncService.Services.Sync
                 };
 
                 var syncResult = await hiDriveSyncExecutor.Sync(syncExecutionInfo, token);
-                if (_folderConfiguration.NotificationConfiguration.SendEmail)
+                if (_folderConfiguration.NotificationConfiguration.SendEmail && !_folderConfiguration.NotificationConfiguration.SendEmailOnlyOnError)
                 {
                     await SendEmail(syncResult);
                 }
@@ -171,8 +171,17 @@ namespace SyncService.Services.Sync
                 body.AppendLine("Items:");
                 foreach (var resultItem in syncResult.Items)
                 {
-                    body.AppendLine(
-                        $"\t{resultItem.Name} {resultItem.Action} {resultItem.State} {resultItem.Exception}");
+                    if(resultItem.Action == SyncAction.None) continue;
+                    if(resultItem.State == SyncState.Successful)
+                    {
+                        body.AppendLine(
+                        $"\t{resultItem.Action}: {resultItem.Name}");
+                    }
+                    else
+                    {
+                        body.AppendLine(
+                        $"\t{resultItem.Action}: {resultItem.Name} {resultItem.State} {resultItem.Exception}");
+                    }
                 }
 
                 try
