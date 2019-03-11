@@ -14,7 +14,7 @@ before_build:
   # Display minimal restore text
   - cmd: dotnet restore
 build_script:
-  - cmd: dotnet publish
+  - cmd: dotnet publish --framework netcoreapp2.1 --runtime win7-x64
 after_build:
   # For once the build has completed
 clone_depth: 1
