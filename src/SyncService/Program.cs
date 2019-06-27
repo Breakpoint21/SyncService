@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.WindowsServices;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace SyncService
@@ -55,6 +56,23 @@ namespace SyncService
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.SetBasePath(Directory.GetCurrentDirectory());
+                    config.AddJsonFile("appsettings.json",
+                        optional: false,
+                        reloadOnChange: true);
+
+                    if (hostingContext.HostingEnvironment.IsDevelopment())
+                    {
+                        config.AddUserSecrets<Startup>();
+                    }
+                    else
+                    {
+                        config.AddXmlFile(
+                            "hidriveSettings.xml", optional: true, reloadOnChange: true);
+                    }
+                })
                 .UseStartup<Startup>().UseSerilog();
     }
 }
