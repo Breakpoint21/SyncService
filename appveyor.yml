@@ -3,6 +3,11 @@ image: Visual Studio 2017
 branches:
   only:
   - master
+environment:
+  HIDRIVE_CLIENT_ID:
+    secure: GE1BL08v0stKESuBTeL6uy4XCxBXfU429d3hpMnmbX5uNTDjTVVzEmh4tKXki1Mz
+  HIDRIVE_CLIENT_SECRET:
+    secure: oxnOCbKjrBIe9xhUdxYIQpnLCiDjM5R/zX6JF/7zpNvwkAKI/l9uXA/0z3zSrPGa
 init:
   # Good practise, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
@@ -13,8 +18,9 @@ before_build:
   - cmd: dotnet --version
   # Display minimal restore text
   - cmd: dotnet restore
-build_script:
-  - cmd: dotnet publish --framework netcoreapp2.1 --runtime win7-x64
+build:
+  project: src\SyncService.Installer\SyncService.Installer.wixproj
+  verbosity: minimal
 after_build:
   # For once the build has completed
 clone_depth: 1
