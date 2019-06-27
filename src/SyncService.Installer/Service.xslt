@@ -11,4 +11,7 @@ xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
   <xsl:key name="exe-search" match="wix:Component[contains(wix:File/@Source, '.exe')]" use="@Id"/>
   <xsl:template match="wix:Component[key('exe-search', @Id)]"/>
   <xsl:template match="wix:ComponentRef[key('exe-search', @Id)]"/>
+  <xsl:key name="hidriveSettings-search" match="wix:Component[contains(wix:File/@Source, 'hidriveSettings.xml')]" use="@Id"/>
+  <xsl:template match="wix:Component[key('hidriveSettings-search', @Id)]"/>
+  <xsl:template match="wix:ComponentRef[key('hidriveSettings-search', @Id)]"/>
 </xsl:stylesheet>
