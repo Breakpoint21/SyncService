@@ -69,6 +69,7 @@ namespace SyncService
                     }
                     else
                     {
+                        Log.Information("Using HiDriveConfig File");
                         config.AddXmlFile(
                             "hidriveSettings.xml", optional: true, reloadOnChange: true);
                     }

@@ -44,7 +44,7 @@
     <Exec Command="dotnet publish $(ProjectDir)..\SyncService\SyncService.csproj -c $(Configuration) -r win7-x64 --framework netcoreapp2.1 --output $(ProjectDir)bin\SyncService" />
     <PropertyGroup>
       <LinkerBaseInputPaths>$(ProjectDir)bin\SyncService</LinkerBaseInputPaths>
-      <DefineConstants>BasePath=$(ProjectDir)bin\SyncService;Version=$(Version);HiDriveClientId=a;HiDriveClientSecret=b</DefineConstants>
+      <DefineConstants>BasePath=$(ProjectDir)bin\SyncService;Version=$(Version);HiDriveClientId=$(HiDriveClientId);HiDriveClientSecret=$(HiDriveClientSecret)</DefineConstants>
     </PropertyGroup>
     <HeatDirectory OutputFile="SyncService.Web.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="SyncService_Project" SuppressCom="true" Directory="$(ProjectDir)bin\SyncService" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" Transforms="Service.xslt" />
   </Target>
