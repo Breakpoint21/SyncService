@@ -2,12 +2,7 @@
 <?ifndef Version?>
 <?define Version = "0.0.0" ?>
 <?endif ?>
-<?ifndef HiDriveClientId?>
-<?define HiDriveClientId = "" ?>
-<?endif ?>
-<?ifndef HiDriveClientSecret?>
-<?define HiDriveClientSecret = "" ?>
-<?endif ?>
+
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 	<Product Id="*" Name="SyncService" Language="1033" Version="$(var.Version).0" Manufacturer="Pascal Schumann" UpgradeCode="C63C3C43-D653-4F37-BFE0-4664297A62DB">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
@@ -17,8 +12,8 @@
 
 		<Feature Id="ProductFeature" Title="SyncService" Level="1">
 			<ComponentGroupRef Id="SyncService_Project" />
-			<ComponentGroupRef Id="cmpSyncService.exe" />
-			<ComponentGroupRef Id="cmphidriveSettings.xml" />
+			<ComponentRef Id="cmpSyncService.exe" />
+			<ComponentRef Id="cmphidriveSettings.xml" />
 		</Feature>
 	</Product>
 
@@ -33,16 +28,16 @@
 	<Fragment>
 	    <DirectoryRef Id="INSTALLFOLDER">
 	      <Component Id="cmpSyncService.exe" Guid="{36010C01-2147-4307-8985-2A98C646D1EC}">
-	        <File Id="filSyncService.exe" KeyPath="yes" Source="SyncService.exe" />
+	        <File Id="filSyncService.exe" KeyPath="yes" Source="$(var.BasePath)\SyncService.exe" />
 	        <ServiceInstall Id="ServiceInstaller" Name="SyncService" DisplayName="SyncService" Description="HiDrive Sync Service" Type='ownProcess' Interactive="no" Start='auto' Vital='yes' ErrorControl='ignore' Account="LocalSystem" />
 	        <ServiceControl Id="StartService" Name="SyncService" Stop='both' Remove='uninstall' Wait='yes' />
 	      </Component>
 	      <Component Id="cmphidriveSettings.xml" Guid="{B5748DD2-6C83-4671-B8A4-DBAE4C8E0903}">
-	      	<File Id="filB5748DD26C834671B8A4DBAE4C8E0903" KeyPath="yes" Source="hidriveSettings.xml" />
+	      	<File Id="filB5748DD26C834671B8A4DBAE4C8E0903" KeyPath="yes" Source="$(var.BasePath)\hidriveSettings.xml" />
 	      	<util:XmlFile Id='SetHiDriveClientId' File='[INSTALLFOLDER]hidriveSettings.xml'
-    Action='setValue' Name='HiDriveClientId' Value='$(var.HiDriveClientId)' ElementPath='//key[@HiDriveClientId]' Sequence='1' />    
+    Action='setValue' Name='HiDriveClientId' Value='$(var.HiDriveClientId)' ElementPath='//key[\[]@HiDriveClientId[\]]' Sequence='1' />    
   			<util:XmlFile Id='SetHiDriveClientSecret' File='[INSTALLFOLDER]hidriveSettings.xml'
-    Action='setValue' Name='HiDriveClientSecret' Value='$(var.HiDriveClientSecret)' ElementPath='//key[@HiDriveClientSecret]' Sequence='1' />
+    Action='setValue' Name='HiDriveClientSecret' Value='$(var.HiDriveClientSecret)' ElementPath='//key[\[]@HiDriveClientSecret[\]]' Sequence='1' />
 	      </Component>
 	    </DirectoryRef>
 	  </Fragment>
