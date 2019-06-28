@@ -25,4 +25,7 @@ after_build:
 clone_depth: 1
 on_finish :
   # any cleanup in here
+artifacts:
+- path: src/SyncService.Installer/**/*.msi
+  name: Setup
 deploy: off
