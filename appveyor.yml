@@ -19,7 +19,7 @@ before_build:
   # Display minimal restore text
   - cmd: dotnet restore
 build_script:
-- cmd: msbuild "src\SyncService.Installer\SyncService.Installer.wixproj" /verbosity:minimal /p:Configuration=Debug /p:Platform=x86 /p:Version=%VERSION% /p:HiDriveClientId=%HIDRIVE_CLIENT_ID% /p:HiDriveClientSecret=%HIDRIVE_CLIENT_SECRET%
+- cmd: msbuild "src\SyncService.Installer\SyncService.Installer.wixproj" /verbosity:minimal /p:Configuration=Debug /p:Platform=x86 /p:Version=%APPVEYOR_BUILD_VERSION% /p:HiDriveClientId=%HIDRIVE_CLIENT_ID% /p:HiDriveClientSecret=%HIDRIVE_CLIENT_SECRET%
 after_build:
   # For once the build has completed
 clone_depth: 1
