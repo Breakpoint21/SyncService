@@ -45,7 +45,10 @@ namespace SyncService
             services.AddSingleton<AccountService>();
             services.AddSingleton<FolderConfigurationService>();
             services.AddSingleton<HiDriveSyncService>();
-            services.AddSingleton<IHiDriveAuthenticator, HiDriveAuthenticator>(provider => new HiDriveAuthenticator(provider.GetRequiredService<IOptions<HiDriveApiOptions>>().Value.HiDriveClientId, provider.GetRequiredService<IOptions<HiDriveApiOptions>>().Value.HiDriveClientSecret));
+            services.AddSingleton<IHiDriveAuthenticator, HiDriveAuthenticator>(provider =>
+                new HiDriveAuthenticator(
+                    Configuration.GetValue<string>("key:HiDriveClientId"),
+                    Configuration.GetValue<string>("key:HiDriveClientSecret")));
             services.AddSingleton<IHiDriveClient, HiDriveClient.HiDriveClient>();
             services.AddSingleton<IHostedService>(provider => provider.GetRequiredService<HiDriveSyncService>());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
