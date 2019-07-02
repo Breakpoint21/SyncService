@@ -39,7 +39,11 @@ namespace SyncService
             services.AddDataProtection().ProtectKeysWithDpapi(protectToLocalMachine: true).PersistKeysToFileSystem(
                 new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "SyncService")));
-            services.Configure<HiDriveApiOptions>(Configuration);
+            services.Configure<HiDriveApiOptions>((options =>
+            {
+                options.HiDriveClientId = Configuration.GetValue<string>("key:HiDriveClientId");
+                options.HiDriveClientSecret = Configuration.GetValue<string>("key:HiDriveClientSecret");
+            }));
             services.AddSingleton<IOptions<HostOptions>>(provider =>
                 new OptionsWrapper<HostOptions>(new HostOptions {ShutdownTimeout = TimeSpan.FromSeconds(20)}));
             services.AddSingleton<AccountService>();
